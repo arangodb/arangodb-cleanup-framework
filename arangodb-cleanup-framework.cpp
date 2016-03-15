@@ -67,8 +67,10 @@ class CleanupScheduler : public Scheduler
 public:
   CleanupScheduler(
       const FrameworkInfo& _frameworkInfo,
-      const std::string &_zk)
-    : frameworkInfo(_frameworkInfo), zk(_zk)
+      const std::string &_zk,
+      const std::string &_name
+)
+    : frameworkInfo(_frameworkInfo), zk(_zk), name(_name)
   {
   }
 
@@ -89,7 +91,6 @@ public:
     }
 
     string prefix(m[9]);
-    string name = prefix.substr(1);
     ZooKeeperStorage storage = ZooKeeperStorage(m[1], Seconds(120), prefix);
     State state = State(&storage);
 
@@ -219,6 +220,7 @@ public:
 private:
   FrameworkInfo frameworkInfo;
   const std::string &zk;
+  const std::string &name;
 };
 
 
@@ -238,6 +240,11 @@ public:
     add(&zk,
         "zk",
         "zookeeper url of the arangodb to clean up");
+    
+    add(&name,
+        "name",
+        "ArangoDB Framework name",
+        "arangodb");
 
     add(&role,
         "role",
@@ -252,6 +259,7 @@ public:
 
   Option<string> master;
   Option<string> zk;
+  string name;
   string role;
   string principal;
 };
@@ -294,7 +302,8 @@ int main(int argc, char** argv)
 
   CleanupScheduler scheduler(
       framework,
-      flags.zk.get()
+      flags.zk.get(),
+      flags.name
   );
 
   MesosSchedulerDriver* driver = new MesosSchedulerDriver(
