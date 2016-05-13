@@ -14,3 +14,38 @@ Then the zookeeper state and all reservations and persistent volumes
 will be cleaned up within minutes.
 
 Then simply destroy the Marathon app for the cleanup-framework.
+
+Alternatively, use curl to start the cleanup-framework by doing
+
+    curl -X POST -H "Content-Type: application/json" http://<your-mesos-master-url>:8080/v2/apps -d @cleanup.json --dump - && echo
+
+where `cleanup.json` looks like the following:
+
+
+    {
+      "id": "cleanup",
+      "cpus": 1,
+      "mem": 4196.0,
+      "ports": [],
+      "instances": 1,
+      "args": [
+        "/arangodb-cleanup-framework",
+        "--name=arangodb",
+        "--master=zk://master.mesos:2181/mesos",
+        "--zk=zk://master.mesos:2181/arangodb/arangodb",
+        "--principal=arangodb",
+        "--role=arangodb"
+      ],
+      "env": {
+      },
+      "container": {
+        "type": "DOCKER",
+        "docker": {
+          "image": "m0ppers/arangodb-cleanup-framework",
+          "forcePullImage": true,
+          "network": "HOST"
+        }
+      }
+    }
+
+
