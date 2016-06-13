@@ -25,7 +25,7 @@ where `cleanup.json` looks like the following:
     {
       "id": "cleanup",
       "cpus": 1,
-      "mem": 4196.0,
+      "mem": 512.0,
       "ports": [],
       "instances": 1,
       "args": [
@@ -41,7 +41,7 @@ where `cleanup.json` looks like the following:
       "container": {
         "type": "DOCKER",
         "docker": {
-          "image": "m0ppers/arangodb-cleanup-framework",
+          "image": "arangodb/arangodb-cleanup-framework",
           "forcePullImage": true,
           "network": "HOST"
         }
