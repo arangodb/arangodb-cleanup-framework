@@ -32,7 +32,7 @@ where `cleanup.json` looks like the following:
         "/arangodb-cleanup-framework",
         "--name=arangodb",
         "--master=zk://master.mesos:2181/mesos",
-        "--zk=zk://master.mesos:2181/arangodb/arangodb",
+        "--zk=zk://master.mesos:2181/arangodb",
         "--principal=arangodb",
         "--role=arangodb"
       ],
