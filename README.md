@@ -30,11 +30,11 @@ where `cleanup.json` looks like the following:
       "instances": 1,
       "args": [
         "/arangodb-cleanup-framework",
-        "--name=arangodb",
+        "--name=arangodb3",
         "--master=zk://master.mesos:2181/mesos",
-        "--zk=zk://master.mesos:2181/arangodb",
-        "--principal=arangodb",
-        "--role=arangodb"
+        "--zk=zk://master.mesos:2181/arangodb3",
+        "--principal=arangodb3",
+        "--role=arangodb3"
       ],
       "env": {
       },
